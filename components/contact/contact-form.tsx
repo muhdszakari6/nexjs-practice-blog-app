@@ -64,7 +64,7 @@ const ContactForm = () => {
     notification = {
       status: requestStatus,
       title: "Error",
-      message: error,
+      message: error.message,
     };
   }
 

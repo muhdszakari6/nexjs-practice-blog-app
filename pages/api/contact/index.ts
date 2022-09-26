@@ -1,6 +1,7 @@
 import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+let connectionString = `mongodb+srv://${process.env.mongodb_username}:${process.env.mongodb_password}@${process.env.mongodb_clustername}.jdtedzg.mongodb.net/${process.env.mongodb_database}?retryWrites=true&w=majority`
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === 'POST') {
         const { email, name, message } = req.body;
@@ -10,7 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             })
         }
         const newMessage: any = { email, name, message }
-        const client = await MongoClient.connect('mongodb+srv://salim:salim@cluster0.jdtedzg.mongodb.net/udemy-blog?retryWrites=true&w=majority')
+        const client = await MongoClient.connect(connectionString)
         const db = client.db()
         try {
             const res = await db.collection('messages').insertOne(newMessage)
